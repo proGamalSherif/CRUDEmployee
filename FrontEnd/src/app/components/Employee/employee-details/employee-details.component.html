@@ -8,7 +8,7 @@
         <div class="row col-12">
           <label>First Name</label>
           <input type="text" formControlName="firstName" class="form-control">
-          @if(FirstName?.invalid && FirstName?.dirty || FirstName?.touched){
+          @if(FirstName?.invalid && (FirstName?.dirty || FirstName?.touched)){
           <div class="invalid-feedback d-block">
             @if(FirstName?.errors?.['required']) {
             <span>First Name is required</span>
@@ -28,7 +28,7 @@
         <div class="row col-12">
           <label>Email Address</label>
           <input type="text" formControlName="emailAddress" class="form-control">
-          @if(EmailAddress?.invalid && EmailAddress?.dirty || EmailAddress?.touched){
+          @if(EmailAddress?.invalid && (EmailAddress?.dirty || EmailAddress?.touched)){
           <div class="invalid-feedback d-block">
             @if(EmailAddress?.errors?.['required']) {
             <span>Email Address is required</span>
@@ -53,7 +53,7 @@
         <div class="row col-12">
           <label>Last Name</label>
           <input type="text" formControlName="lastName" class="form-control">
-          @if(LastName?.invalid && LastName?.dirty || LastName?.touched){
+          @if(LastName?.invalid && (LastName?.dirty || LastName?.touched)){
           <div class="invalid-feedback d-block">
             @if(LastName?.errors?.['required']) {
             <span>Last Name is required</span>
@@ -73,21 +73,21 @@
         <div class="row col-12">
           <label>Position</label>
           <input type="text" formControlName="position" class="form-control">
-          @if(Position?.invalid && Position?.dirty || Position?.touched){
-          <div class="invalid-feedback d-block">
-            @if(Position?.errors?.['required']) {
-            <span>Position is required</span>
-            }
-            @if(Position?.errors?.['minlength']) {
-            <span>Position length shouldn't be less than 5 characters</span>
-            }
-            @if(Position?.errors?.['maxlength']) {
-            <span>Position length shouldn't be more than 100 characters</span>
-            }
-            @if(Position?.errors?.['whitespace']) {
-            <span> cannot be empty or contain only spaces</span>
-            }
-          </div>
+          @if(Position?.invalid && (Position?.dirty || Position?.touched)){
+            <div class="invalid-feedback d-block">
+              @if(Position?.errors?.['required']) {
+                <span>Position is required</span> <br>
+              }
+              @if(Position?.errors?.['minlength']) {
+                <span>length shouldn't be less than 5 characters</span> <br>
+              }
+              @if(Position?.errors?.['maxlength']) {
+                <span>length shouldn't be more than 100 characters</span> <br>
+              }
+              @if(Position?.errors?.['whitespace']) {
+                <span>cannot be empty or contain only spaces</span> <br>
+              }
+            </div>
           }
         </div>
       </div>
@@ -96,9 +96,10 @@
           <button class="btn btn-primary" type="button" (click)="CancelForm()">Cancel</button>
         </div>
         <div class="row col-auto me-1 mt-sm-2 mt-2 mt-lg-0 mt-md-0">
-          <button class="btn btn-success" type="submit">Save Changes</button>
+          <button class="btn btn-success" type="submit" [disabled]="EmployeeForm.invalid">
+            Save Changes
+          </button>
         </div>
-
       </div>
     </div>
   </form>

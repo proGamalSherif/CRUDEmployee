@@ -46,7 +46,6 @@ export class AlertService {
       didOpen: () => {
         Swal.showLoading();
       },
-      timer:2000,
     });
   }
   close() {
