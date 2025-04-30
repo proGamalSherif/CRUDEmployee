@@ -35,7 +35,6 @@ export class AlertService {
       cancelButtonText: 'Cancel',
       confirmButtonColor: '#0d6efd',
       cancelButtonColor: '#6c757d',
-      timer: 1000,
     });
   }
   showLoading(title: string = 'Loading...', message: string = 'Please wait') {
