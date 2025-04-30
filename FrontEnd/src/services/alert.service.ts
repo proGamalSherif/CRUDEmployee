@@ -35,7 +35,6 @@ export class AlertService {
       cancelButtonText: 'Cancel',
       confirmButtonColor: '#0d6efd',
       cancelButtonColor: '#6c757d',
-      timer: 1000,
     });
   }
   showLoading(title: string = 'Loading...', message: string = 'Please wait') {
@@ -47,7 +46,6 @@ export class AlertService {
       didOpen: () => {
         Swal.showLoading();
       },
-      timer:2000,
     });
   }
   close() {
