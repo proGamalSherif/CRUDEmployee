@@ -16,7 +16,11 @@ namespace API.Repositories
         {
             return await db.Employees.ToListAsync();
         }
-
+        public async Task<int> GetTotalPages(int pgSize)
+        {
+            int TotalCount = await db.Employees.CountAsync();
+            return (int)Math.Ceiling((double)TotalCount / pgSize);
+        }
         public async Task<Employee> GetByIdAsync(int id)
         {
             return await db.Employees.FindAsync(id);

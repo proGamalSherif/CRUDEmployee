@@ -1,4 +1,4 @@
-<div class="container border border-1 shadow-sm p-2 rounded d-flex flex-column align-items-center justify-content-start mt-4" style="height: 95vh;">
+<div class="container border border-1 shadow-sm p-2 rounded d-flex flex-column align-items-center justify-content-start mt-4" style="min-height: 95vh;">
     <!-- Search & Filter - Add Employee Buttons -->
     <div class="row col-lg-12 col-md-12 col-sm-12 col-12 d-flex align-items-end justify-content-between border-bottom border-1">
         <div class="flex-column col-lg-4 col-md-6 col-sm-12 col-12 mb-2">
@@ -13,8 +13,8 @@
         </div>
     </div>
     <!-- Table Employee Data -->
-    <div class="row col-lg-12 col-md-12 col-sm-12 col-12 d-flex align-items-end justify-content-between border-bottom border-1">
-        <table class="table table-light table-hover">
+    <div class="row col-lg-12 col-md-12 col-sm-12 col-12 d-flex align-items-start justify-content-start border-bottom border-1" style="height: 79vh; overflow-y: auto;">
+        <table class="table table-light table-hover border">
             <thead>
                 <tr>
                     <th class="text-center" style="width: 10%;">Id</th>
@@ -46,4 +46,23 @@
             </tbody>
         </table>
     </div>
+    <!-- Pagination -->
+     <div class="row col-lg-11 col-md-11 col-sm-11 col-11 d-flex justify-content-center justify-content-lg-end justify-content-md-end gap-2 mt-3">
+        <div class="row col-lg-1 col-md-3 col-sm-3 col-3">
+            <button class="btn btn-white rounded text-primary border-0" [disabled]="CurrentPage==1" (click)="PrevPage()">
+                <i class="fas fa-step-backward fa-xl"></i>
+            </button>
+        </div>
+        <div class="row row col-lg-1 col-md-3 col-sm-3 col-3">
+            <input type="number" class="form-control text-center bg-white" disabled [ngModel]="CurrentPage">
+        </div>
+        <div class="row row col-lg-1 col-md-3 col-sm-3 col-3">
+            <input type="number" class="form-control text-center bg-white" disabled [ngModel]="TotalPages">
+        </div>
+        <div class="row col-lg-1 col-md-3 col-sm-3 col-3">
+            <button class="btn btn-white rounded text-primary border-0" [disabled]="CurrentPage == TotalPages" (click)="NextPage()">
+                <i class="fas fa-step-forward fa-xl"></i>
+            </button>
+        </div>
+     </div>
 </div>
