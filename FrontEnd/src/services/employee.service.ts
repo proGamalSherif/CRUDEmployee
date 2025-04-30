@@ -16,6 +16,12 @@ export class EmployeeService {
   GetEmployeeById(id:number):Observable<Employee>{
     return this.httpClient.get<Employee>(`${this.apiUrl}/Employee/${id}`);
   }
+  GetTotalPages(pgSize:number):Observable<number>{
+    return this.httpClient.get<number>(`${this.apiUrl}/Employee/GetTotalPages/${pgSize}`)
+  }
+  GetAllWithPagination(pgNumber:number,pgSize:number):Observable<Employee[]>{
+    return this.httpClient.get<Employee[]>(`${this.apiUrl}/Employee/${pgNumber}/${pgSize}`)
+  }
   InsertEmployee(employeeForm:FormData):Observable<any>{
     return this.httpClient.post(`${this.apiUrl}/Employee`,employeeForm)
   }

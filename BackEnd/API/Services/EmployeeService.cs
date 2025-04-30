@@ -21,6 +21,10 @@ namespace API.Services
             var mappedEmployees = mapper.Map<IEnumerable<ReadEmploeeDTO>>(employees);
             return mappedEmployees;
         }
+        public Task<int> GetTotalPages(int pgSize)
+        {
+            return unitOfWork.EmployeeRepository.GetTotalPages(pgSize);
+        }
         public async Task<IEnumerable<ReadEmploeeDTO>> GetAllEmployeesAsyncWithPagination(int pgNumber, int pgSize)
         {
             var employees = await unitOfWork.EmployeeRepository.GetAllAsyncWithPagination(pgNumber, pgSize);
@@ -47,6 +51,5 @@ namespace API.Services
         {
            await unitOfWork.EmployeeRepository.Delete(id);
         }
-       
     }
 }
