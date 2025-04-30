@@ -5,76 +5,6 @@
     "version": "1.0"
   },
   "paths": {
-    "/api/Employee": {
-      "get": {
-        "tags": [
-          "Employee"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Employee"
-        ],
-        "requestBody": {
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "required": [
-                  "EmailAddress",
-                  "FirstName",
-                  "LastName",
-                  "Position"
-                ],
-                "type": "object",
-                "properties": {
-                  "FirstName": {
-                    "maxLength": 100,
-                    "type": "string"
-                  },
-                  "LastName": {
-                    "maxLength": 100,
-                    "type": "string"
-                  },
-                  "EmailAddress": {
-                    "maxLength": 100,
-                    "type": "string",
-                    "format": "email"
-                  },
-                  "Position": {
-                    "maxLength": 100,
-                    "type": "string"
-                  }
-                }
-              },
-              "encoding": {
-                "FirstName": {
-                  "style": "form"
-                },
-                "LastName": {
-                  "style": "form"
-                },
-                "EmailAddress": {
-                  "style": "form"
-                },
-                "Position": {
-                  "style": "form"
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/api/Employee/GetTotalPages/{pgSize}": {
       "get": {
         "tags": [
@@ -88,6 +18,28 @@
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Employee/FilterEmployee/{searchText}": {
+      "get": {
+        "tags": [
+          "Employee"
+        ],
+        "parameters": [
+          {
+            "name": "searchText",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
             }
           }
         ],
@@ -236,6 +188,66 @@
             }
           }
         ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Employee": {
+      "post": {
+        "tags": [
+          "Employee"
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "EmailAddress",
+                  "FirstName",
+                  "LastName",
+                  "Position"
+                ],
+                "type": "object",
+                "properties": {
+                  "FirstName": {
+                    "maxLength": 100,
+                    "type": "string"
+                  },
+                  "LastName": {
+                    "maxLength": 100,
+                    "type": "string"
+                  },
+                  "EmailAddress": {
+                    "maxLength": 100,
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "Position": {
+                    "maxLength": 100,
+                    "type": "string"
+                  }
+                }
+              },
+              "encoding": {
+                "FirstName": {
+                  "style": "form"
+                },
+                "LastName": {
+                  "style": "form"
+                },
+                "EmailAddress": {
+                  "style": "form"
+                },
+                "Position": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK"

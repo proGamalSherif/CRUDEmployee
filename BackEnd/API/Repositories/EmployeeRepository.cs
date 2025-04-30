@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Drawing;
+using System.Threading.Tasks;
 using API.Interfaces;
 using API.Models;
 using Microsoft.EntityFrameworkCore;
@@ -12,10 +13,6 @@ namespace API.Repositories
         {
             db = _db;
         }
-        public async Task<IEnumerable<Employee>> GetAllAsync()
-        {
-            return await db.Employees.ToListAsync();
-        }
         public async Task<int> GetTotalPages(int pgSize)
         {
             int TotalCount = await db.Employees.CountAsync();
@@ -25,7 +22,6 @@ namespace API.Repositories
         {
             return await db.Employees.FindAsync(id);
         }
-
         public async Task AddAsync(Employee employee)
         {
             await db.Employees.AddAsync(employee);
@@ -59,6 +55,25 @@ namespace API.Repositories
                 .Skip((pgNumber - 1) * pgSize)
                 .Take(pgSize)
                 .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Employee>> FilterSearch(string searchText)
+        {
+            if(searchText != "")
+            {
+                return await db.Employees
+               .Where(e =>
+               e.FirstName.ToLower().Contains(searchText.ToLower()) ||
+               e.LastName.ToLower().Contains(searchText.ToLower()) ||
+               (e.FirstName.ToLower() + " " + e.LastName.ToLower()).Contains(searchText.ToLower()) ||
+               e.Position.ToLower().Contains(searchText.ToLower()) ||
+               e.EmailAddress.ToLower().Contains(searchText.ToLower()))
+               .ToListAsync();
+            }
+            else
+            {
+                return await db.Employees.ToListAsync();
+            }
         }
     }
 }

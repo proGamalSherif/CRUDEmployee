@@ -15,12 +15,6 @@ namespace API.Services
             unitOfWork = _unitOfWork;
             mapper = _mapper;
         }
-        public async Task<IEnumerable<ReadEmploeeDTO>> GetAllEmployeesAsync()
-        {
-            var employees = await unitOfWork.EmployeeRepository.GetAllAsync();
-            var mappedEmployees = mapper.Map<IEnumerable<ReadEmploeeDTO>>(employees);
-            return mappedEmployees;
-        }
         public Task<int> GetTotalPages(int pgSize)
         {
             return unitOfWork.EmployeeRepository.GetTotalPages(pgSize);
@@ -50,6 +44,12 @@ namespace API.Services
         public async Task DeleteEmployeeAsync(int id)
         {
            await unitOfWork.EmployeeRepository.Delete(id);
+        }
+        public async Task<IEnumerable<ReadEmploeeDTO>> FilterSearch(string searchText)
+        {
+            var employess = await unitOfWork.EmployeeRepository.FilterSearch(searchText);
+            var mappedEmployee = mapper.Map<IEnumerable<ReadEmploeeDTO>>(employess);
+            return mappedEmployee;
         }
     }
 }
