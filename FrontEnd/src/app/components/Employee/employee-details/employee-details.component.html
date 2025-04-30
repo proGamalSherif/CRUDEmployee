@@ -16,6 +16,12 @@
             @if(FirstName?.errors?.['maxlength']) {
             <span>First Name length shouldn't be more than 100 characters</span>
             }
+            @if(FirstName?.errors?.['minlength']) {
+            <span>First Name length shouldn't be less than 5 characters</span>
+            }
+            @if(FirstName?.errors?.['whitespace']) {
+            <span> cannot be empty or contain only spaces</span>
+            }
           </div>
           }
         </div>
@@ -27,11 +33,17 @@
             @if(EmailAddress?.errors?.['required']) {
             <span>Email Address is required</span>
             }
+            @if(EmailAddress?.errors?.['minlength']) {
+            <span>Email Address length shouldn't be less than 5 characters</span>
+            }
             @if(EmailAddress?.errors?.['maxlength']) {
             <span>Email Address length shouldn't be more than 100 characters</span>
             }
             @if(EmailAddress?.errors?.['email']){
             <span>Email Address is Invalid</span>
+            }
+            @if(EmailAddress?.errors?.['whitespace']) {
+            <span> cannot be empty or contain only spaces</span>
             }
           </div>
           }
@@ -46,8 +58,14 @@
             @if(LastName?.errors?.['required']) {
             <span>Last Name is required</span>
             }
+            @if(LastName?.errors?.['minlength']) {
+            <span>Last Name length shouldn't be less than 5 characters</span>
+            }
             @if(LastName?.errors?.['maxlength']) {
             <span>Last Name length shouldn't be more than 100 characters</span>
+            }
+            @if(LastName?.errors?.['whitespace']) {
+            <span> cannot be empty or contain only spaces</span>
             }
           </div>
           }
@@ -60,8 +78,14 @@
             @if(Position?.errors?.['required']) {
             <span>Position is required</span>
             }
+            @if(Position?.errors?.['minlength']) {
+            <span>Position length shouldn't be less than 5 characters</span>
+            }
             @if(Position?.errors?.['maxlength']) {
             <span>Position length shouldn't be more than 100 characters</span>
+            }
+            @if(Position?.errors?.['whitespace']) {
+            <span> cannot be empty or contain only spaces</span>
             }
           </div>
           }
