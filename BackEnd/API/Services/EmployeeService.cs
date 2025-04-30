@@ -1,0 +1,45 @@
+﻿using API.DTO;
+using API.Interfaces;
+using API.Models;
+using API.Repositories;
+using AutoMapper;
+
+namespace API.Services
+{
+    public class EmployeeService : IEmployeeService
+    {
+        private readonly IUnitOfWork unitOfWork;
+        private readonly IMapper mapper;
+        public EmployeeService(IUnitOfWork _unitOfWork, IMapper _mapper)
+        {
+            unitOfWork = _unitOfWork;
+            mapper = _mapper;
+        }
+        public async Task<IEnumerable<ReadEmploeeDTO>> GetAllEmployeesAsync()
+        {
+            var employees = await unitOfWork.EmployeeRepository.GetAllAsync();
+            var mappedEmployees = mapper.Map<IEnumerable<ReadEmploeeDTO>>(employees);
+            return mappedEmployees;
+        }
+        public async Task<ReadEmploeeDTO> GetEmployeeByIdAsync(int id)
+        {
+            var employee = await unitOfWork.EmployeeRepository.GetByIdAsync(id);
+            var mappedEmployee=mapper.Map<ReadEmploeeDTO>(employee);    
+            return mappedEmployee;
+        }
+        public async Task AddEmployeeAsync(ModifyEmployeeDTO employee)
+        {
+            var mappedEmployee = mapper.Map<Employee>(employee);
+            await unitOfWork.EmployeeRepository.AddAsync(mappedEmployee);
+        }
+        public async Task UpdateEmployeeAsync(int id, ModifyEmployeeDTO employee)
+        {
+            var mappedEmployee = mapper.Map<Employee>(employee);
+            await unitOfWork.EmployeeRepository.Update(id, mappedEmployee);
+        }
+        public async Task DeleteEmployeeAsync(int id)
+        {
+           await unitOfWork.EmployeeRepository.Delete(id);
+        }
+    }
+}
