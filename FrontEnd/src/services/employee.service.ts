@@ -16,6 +16,12 @@ export class EmployeeService {
   GetEmployeeById(id:number):Observable<Employee>{
     return this.httpClient.get<Employee>(`${this.apiUrl}/Employee/${id}`);
   }
+  InsertEmployee(employeeForm:FormData):Observable<any>{
+    return this.httpClient.post(`${this.apiUrl}/Employee`,employeeForm)
+  }
+  UpdateEmployee(id:number, employeeForm:FormData):Observable<any>{
+    return this.httpClient.put(`${this.apiUrl}/Employee/${id}`,employeeForm)
+  }
   DeleteEmployee(id:number):Observable<any>{
     return this.httpClient.delete<any>(`${this.apiUrl}/Employee/${id}`)
   }

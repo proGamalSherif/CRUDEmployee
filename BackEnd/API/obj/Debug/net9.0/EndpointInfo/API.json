@@ -22,19 +22,48 @@
         ],
         "requestBody": {
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/ModifyEmployeeDTO"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ModifyEmployeeDTO"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/ModifyEmployeeDTO"
+                "required": [
+                  "EmailAddress",
+                  "FirstName",
+                  "LastName",
+                  "Position"
+                ],
+                "type": "object",
+                "properties": {
+                  "FirstName": {
+                    "maxLength": 100,
+                    "type": "string"
+                  },
+                  "LastName": {
+                    "maxLength": 100,
+                    "type": "string"
+                  },
+                  "EmailAddress": {
+                    "maxLength": 100,
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "Position": {
+                    "maxLength": 100,
+                    "type": "string"
+                  }
+                }
+              },
+              "encoding": {
+                "FirstName": {
+                  "style": "form"
+                },
+                "LastName": {
+                  "style": "form"
+                },
+                "EmailAddress": {
+                  "style": "form"
+                },
+                "Position": {
+                  "style": "form"
+                }
               }
             }
           }
@@ -117,19 +146,48 @@
         ],
         "requestBody": {
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/ModifyEmployeeDTO"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ModifyEmployeeDTO"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/ModifyEmployeeDTO"
+                "required": [
+                  "EmailAddress",
+                  "FirstName",
+                  "LastName",
+                  "Position"
+                ],
+                "type": "object",
+                "properties": {
+                  "FirstName": {
+                    "maxLength": 100,
+                    "type": "string"
+                  },
+                  "LastName": {
+                    "maxLength": 100,
+                    "type": "string"
+                  },
+                  "EmailAddress": {
+                    "maxLength": 100,
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "Position": {
+                    "maxLength": 100,
+                    "type": "string"
+                  }
+                }
+              },
+              "encoding": {
+                "FirstName": {
+                  "style": "form"
+                },
+                "LastName": {
+                  "style": "form"
+                },
+                "EmailAddress": {
+                  "style": "form"
+                },
+                "Position": {
+                  "style": "form"
+                }
               }
             }
           }
@@ -163,30 +221,5 @@
       }
     }
   },
-  "components": {
-    "schemas": {
-      "ModifyEmployeeDTO": {
-        "type": "object",
-        "properties": {
-          "firstName": {
-            "type": "string",
-            "nullable": true
-          },
-          "lastName": {
-            "type": "string",
-            "nullable": true
-          },
-          "emailAddress": {
-            "type": "string",
-            "nullable": true
-          },
-          "position": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      }
-    }
-  }
+  "components": { }
 }

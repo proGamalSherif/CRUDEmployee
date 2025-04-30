@@ -18,9 +18,24 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "employeeModel",
-        "Type": "API.DTO.ModifyEmployeeDTO",
-        "IsRequired": true
+        "Name": "FirstName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "LastName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "EmailAddress",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Position",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -55,9 +70,24 @@
         "IsRequired": true
       },
       {
-        "Name": "employeeModel",
-        "Type": "API.DTO.ModifyEmployeeDTO",
-        "IsRequired": true
+        "Name": "FirstName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "LastName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "EmailAddress",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Position",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []

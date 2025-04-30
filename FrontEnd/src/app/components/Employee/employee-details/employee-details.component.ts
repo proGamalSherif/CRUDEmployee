@@ -7,7 +7,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService } from '../../../../services/alert.service';
 import { EmployeeService } from '../../../../services/employee.service';
 
@@ -25,7 +25,8 @@ export class EmployeeDetailsComponent implements OnInit {
     private fb: FormBuilder,
     private routes: ActivatedRoute,
     private alertServ: AlertService,
-    private employeeServ:EmployeeService
+    private employeeServ: EmployeeService,
+    private router: Router
   ) {
     this.routes.paramMap.subscribe((id) => {
       this.EmployeeId = Number(id.get('id'));
@@ -39,26 +40,75 @@ export class EmployeeDetailsComponent implements OnInit {
   ngOnInit() {
     this.alertServ.showLoading();
     this.EmployeeForm = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      emailAddress: ['', Validators.required],
-      position: ['', Validators.required],
+      firstName: ['', [Validators.required,Validators.maxLength(100)]],
+      lastName: ['',[ Validators.required,Validators.maxLength(100)]],
+      emailAddress: ['', [Validators.required,Validators.email,Validators.maxLength(100)]],
+      position: ['', [Validators.required,Validators.maxLength(100)]],
     });
     if (this.EmployeeId > 0) {
       this.employeeServ.GetEmployeeById(this.EmployeeId).subscribe({
-        next:(res)=>{
+        next: (res) => {
           this.EmployeeForm.patchValue({
-            firstName:[res.firstName],
-            lastName:[res.lastName],
-            emailAddress:[res.emailAddress],
-            position:[res.position]
-          })
+            firstName: [res.firstName],
+            lastName: [res.lastName],
+            emailAddress: [res.emailAddress],
+            position: [res.position],
+          });
+          this.alertServ.close();
         },
-        error:(err)=>{
+        error: (err) => {
           console.log(err);
-        }
-      })
+          this.alertServ.close();
+        },
+      });
+    }else{
+      this.alertServ.close();
     }
-    this.alertServ.close();
+    
   }
+  OnSubmit() {
+    this.alertServ.showLoading();
+    const formData = new FormData();
+    formData.append('firstName', this.EmployeeForm.get('firstName')?.value);
+    formData.append('lastName', this.EmployeeForm.get('lastName')?.value);
+    formData.append(
+      'emailAddress',
+      this.EmployeeForm.get('emailAddress')?.value
+    );
+    formData.append('position', this.EmployeeForm.get('position')?.value);
+    if (this.EmployeeId > 0) {
+      // Update
+      this.employeeServ.UpdateEmployee(this.EmployeeId, formData).subscribe({
+        next: async () => {
+          this.alertServ.close();
+          await this.alertServ.success('Employee Updated Success');
+          this.router.navigate(['Manage-Employee']);
+        },
+        error: (err) => {
+          this.alertServ.close();
+          this.alertServ.error(err.error.message);
+        },
+      });
+    } else {
+      // Insert
+      this.employeeServ.InsertEmployee(formData).subscribe({
+        next: async () => {
+          this.alertServ.close();
+          await this.alertServ.success('Employee Insert Success');
+          this.router.navigate(['Manage-Employee']);
+        },
+        error: (err) => {
+          this.alertServ.close();
+          this.alertServ.error(err);
+        },
+      });
+    }
+  }
+  CancelForm(){
+    this.router.navigate(['Manage-Employee']);
+  }
+  get FirstName() { return this.EmployeeForm.get('firstName'); }
+  get LastName() { return this.EmployeeForm.get('lastName'); }
+  get EmailAddress() { return this.EmployeeForm.get('emailAddress'); }
+  get Position() { return this.EmployeeForm.get('position'); }
 }
