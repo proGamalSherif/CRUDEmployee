@@ -3,7 +3,7 @@
     <div class="row col-lg-12 col-md-12 col-sm-12 col-12 d-flex align-items-end justify-content-between border-bottom border-1">
         <div class="flex-column col-lg-4 col-md-6 col-sm-12 col-12 mb-2">
             <label for="inp-search " class="fs-5">Search</label>
-            <input type="text" id="inp-search" class="form-control" placeholder="Search For Employee ... ">
+            <input type="text" id="inp-search" class="form-control" placeholder="Search For Employee ... " #SearchText >
         </div>
         <div class="flex-column col-lg-2 col-md-2 col-sm-12 col-12 mb-2">
             <button class="btn btn-primary w-100" (click)="NavigateToDetails(0)">
@@ -60,7 +60,7 @@
             <input type="number" class="form-control text-center bg-white" disabled [ngModel]="TotalPages">
         </div>
         <div class="row col-lg-1 col-md-3 col-sm-3 col-3">
-            <button class="btn btn-white rounded text-primary border-0" [disabled]="CurrentPage == TotalPages" (click)="NextPage()">
+            <button class="btn btn-white rounded text-primary border-0" [disabled]="CurrentPage >= TotalPages" (click)="NextPage()">
                 <i class="fas fa-step-forward fa-xl"></i>
             </button>
         </div>
