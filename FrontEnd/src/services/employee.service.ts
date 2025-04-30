@@ -13,6 +13,9 @@ export class EmployeeService {
   GetEmployeeAsync():Observable<Employee[]>{
     return this.httpClient.get<Employee[]>(`${this.apiUrl}/Employee`);
   }
+  GetEmployeeById(id:number):Observable<Employee>{
+    return this.httpClient.get<Employee>(`${this.apiUrl}/Employee/${id}`);
+  }
   DeleteEmployee(id:number):Observable<any>{
     return this.httpClient.delete<any>(`${this.apiUrl}/Employee/${id}`)
   }
