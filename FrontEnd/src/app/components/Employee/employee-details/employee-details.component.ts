@@ -1,15 +1,26 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
+  AbstractControl,
   FormBuilder,
   FormGroup,
   FormsModule,
+  MinLengthValidator,
+  MinValidator,
   ReactiveFormsModule,
+  ValidationErrors,
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService } from '../../../../services/alert.service';
 import { EmployeeService } from '../../../../services/employee.service';
+
+export function noWhitespaceValidator(control: AbstractControl): ValidationErrors | null {
+  const value = control.value;
+  if (typeof value !== 'string') return null;
+  const isWhitespace = value.trim().length === 0;
+  return isWhitespace ? { whitespace: true } : null;
+}
 
 @Component({
   selector: 'app-employee-details',
@@ -40,10 +51,13 @@ export class EmployeeDetailsComponent implements OnInit {
   ngOnInit() {
     this.alertServ.showLoading();
     this.EmployeeForm = this.fb.group({
-      firstName: ['', [Validators.required,Validators.maxLength(100)]],
-      lastName: ['',[ Validators.required,Validators.maxLength(100)]],
-      emailAddress: ['', [Validators.required,Validators.email,Validators.maxLength(100)]],
-      position: ['', [Validators.required,Validators.maxLength(100)]],
+      firstName: ['', [Validators.required,Validators.maxLength(100),noWhitespaceValidator,Validators.minLength(5)]],
+      lastName: ['',[ Validators.required,
+        Validators.maxLength(100),
+        Validators.minLength(5),
+        noWhitespaceValidator]],
+      emailAddress: ['', [Validators.required,Validators.email,Validators.maxLength(100),noWhitespaceValidator,Validators.minLength(5)]],
+      position: ['', [Validators.required,Validators.maxLength(100),noWhitespaceValidator,Validators.minLength(5)]],
     });
     if (this.EmployeeId > 0) {
       this.employeeServ.GetEmployeeById(this.EmployeeId).subscribe({
@@ -57,7 +71,6 @@ export class EmployeeDetailsComponent implements OnInit {
           this.alertServ.close();
         },
         error: (err) => {
-          console.log(err);
           this.alertServ.close();
         },
       });
@@ -86,7 +99,7 @@ export class EmployeeDetailsComponent implements OnInit {
         },
         error: (err) => {
           this.alertServ.close();
-          this.alertServ.error(err.error.message);
+          this.alertServ.error(err.message);
         },
       });
     } else {
@@ -99,7 +112,7 @@ export class EmployeeDetailsComponent implements OnInit {
         },
         error: (err) => {
           this.alertServ.close();
-          this.alertServ.error(err);
+          this.alertServ.error(err.message);
         },
       });
     }
@@ -107,8 +120,8 @@ export class EmployeeDetailsComponent implements OnInit {
   CancelForm(){
     this.router.navigate(['Manage-Employee']);
   }
-  get FirstName() { return this.EmployeeForm.get('firstName'); }
-  get LastName() { return this.EmployeeForm.get('lastName'); }
+  get FirstName() { return this.EmployeeForm.get('firstName')}
+  get LastName() { return this.EmployeeForm.get('lastName')}
   get EmailAddress() { return this.EmployeeForm.get('emailAddress'); }
   get Position() { return this.EmployeeForm.get('position'); }
 }
