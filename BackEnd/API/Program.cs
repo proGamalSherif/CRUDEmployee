@@ -23,18 +23,21 @@ namespace API
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             //Inject IEmployeeService
             builder.Services.AddScoped<IEmployeeService, EmployeeService>();
-
-
-            // Add Swagger services
+            //Add Swagger services
             builder.Services.AddSwaggerGen();
-
-
+            //Allow Cors
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll", policy =>
+                {
+                    policy.AllowAnyOrigin()
+                          .AllowAnyHeader()
+                          .AllowAnyMethod();
+                });
+            });
             // Add services to the container.
-
             builder.Services.AddControllers();
-
             var app = builder.Build();
-
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
@@ -42,14 +45,10 @@ namespace API
                 app.UseSwaggerUI(c =>
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"));
             }
-
             app.UseHttpsRedirection();
-
+            app.UseCors("AllowAll");
             app.UseAuthorization();
-
-
             app.MapControllers();
-
             app.Run();
         }
     }
