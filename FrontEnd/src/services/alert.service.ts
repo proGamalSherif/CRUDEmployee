@@ -5,20 +5,24 @@ import Swal from 'sweetalert2';
 })
 export class AlertService {
   constructor() { }
-  success(message: string, title: string = 'Success') {
-    Swal.fire({
+  success(message: string, title: string = 'Success'): Promise<void> {
+    return Swal.fire({
       icon: 'success',
       title,
       text: message,
-      confirmButtonColor: '#198754'
+      confirmButtonColor: '#198754',
+      timer: 1000,
+    }).then(() => {
+      return;
     });
   }
   error(message: string, title: string = 'Error') {
-    Swal.fire({
+    return Swal.fire({
       icon: 'error',
       title,
       text: message,
-      confirmButtonColor: '#dc3545'
+      confirmButtonColor: '#dc3545',
+      timer: 1000,
     });
   }
   confirm(message: string, title: string = 'Are you sure?') {
@@ -30,7 +34,8 @@ export class AlertService {
       confirmButtonText: 'Yes',
       cancelButtonText: 'Cancel',
       confirmButtonColor: '#0d6efd',
-      cancelButtonColor: '#6c757d'
+      cancelButtonColor: '#6c757d',
+      timer: 1000,
     });
   }
   showLoading(title: string = 'Loading...', message: string = 'Please wait') {
@@ -41,7 +46,8 @@ export class AlertService {
       allowEscapeKey: false,
       didOpen: () => {
         Swal.showLoading();
-      }
+      },
+      timer:2000,
     });
   }
   close() {

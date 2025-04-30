@@ -7,7 +7,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService } from '../../../../services/alert.service';
 import { EmployeeService } from '../../../../services/employee.service';
 
@@ -25,7 +25,8 @@ export class EmployeeDetailsComponent implements OnInit {
     private fb: FormBuilder,
     private routes: ActivatedRoute,
     private alertServ: AlertService,
-    private employeeServ: EmployeeService
+    private employeeServ: EmployeeService,
+    private router: Router
   ) {
     this.routes.paramMap.subscribe((id) => {
       this.EmployeeId = Number(id.get('id'));
@@ -39,10 +40,10 @@ export class EmployeeDetailsComponent implements OnInit {
   ngOnInit() {
     this.alertServ.showLoading();
     this.EmployeeForm = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      emailAddress: ['', Validators.required],
-      position: ['', Validators.required],
+      firstName: ['', [Validators.required,Validators.maxLength(100)]],
+      lastName: ['',[ Validators.required,Validators.maxLength(100)]],
+      emailAddress: ['', [Validators.required,Validators.email,Validators.maxLength(100)]],
+      position: ['', [Validators.required,Validators.maxLength(100)]],
     });
     if (this.EmployeeId > 0) {
       this.employeeServ.GetEmployeeById(this.EmployeeId).subscribe({
@@ -53,13 +54,17 @@ export class EmployeeDetailsComponent implements OnInit {
             emailAddress: [res.emailAddress],
             position: [res.position],
           });
+          this.alertServ.close();
         },
         error: (err) => {
           console.log(err);
+          this.alertServ.close();
         },
       });
+    }else{
+      this.alertServ.close();
     }
-    this.alertServ.close();
+    
   }
   OnSubmit() {
     this.alertServ.showLoading();
@@ -74,27 +79,36 @@ export class EmployeeDetailsComponent implements OnInit {
     if (this.EmployeeId > 0) {
       // Update
       this.employeeServ.UpdateEmployee(this.EmployeeId, formData).subscribe({
-        next: () => {
+        next: async () => {
           this.alertServ.close();
-          this.alertServ.success('Employee Updated Success');
+          await this.alertServ.success('Employee Updated Success');
+          this.router.navigate(['Manage-Employee']);
         },
-        error:(err)=>{
+        error: (err) => {
           this.alertServ.close();
           this.alertServ.error(err.error.message);
-        }
+        },
       });
     } else {
       // Insert
       this.employeeServ.InsertEmployee(formData).subscribe({
-        next:()=>{
+        next: async () => {
           this.alertServ.close();
-          this.alertServ.success('Employee Insert Success');
+          await this.alertServ.success('Employee Insert Success');
+          this.router.navigate(['Manage-Employee']);
         },
-        error:(err)=>{
+        error: (err) => {
           this.alertServ.close();
           this.alertServ.error(err);
-        }
-      })
+        },
+      });
     }
   }
+  CancelForm(){
+    this.router.navigate(['Manage-Employee']);
+  }
+  get FirstName() { return this.EmployeeForm.get('firstName'); }
+  get LastName() { return this.EmployeeForm.get('lastName'); }
+  get EmailAddress() { return this.EmployeeForm.get('emailAddress'); }
+  get Position() { return this.EmployeeForm.get('position'); }
 }
