@@ -14,17 +14,17 @@ namespace API.Controllers
         {
             employeeService= _employeeService;
         }
-        [HttpGet]
-        public async Task<ActionResult> GetAllAsync()
-        {
-            var employees = await employeeService.GetAllEmployeesAsync();
-            return Ok(employees);
-        }
         [HttpGet("GetTotalPages/{pgSize}")]
         public async Task<ActionResult> GetTotalPages(int pgSize)
         {
             var totalPages = await employeeService.GetTotalPages(pgSize);
             return Ok(totalPages);
+        }
+        [HttpGet("FilterEmployee/{searchText}")]
+        public async Task<ActionResult> FilterEmployee(string searchText)
+        {
+            var employees = await employeeService.FilterSearch(searchText);
+            return Ok(employees);
         }
         [HttpGet("{pgNumber}/{pgSize}")]
         public async Task<ActionResult> GetAllAsyncWithPagination(int pgNumber,int pgSize)

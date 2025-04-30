@@ -1,16 +1,6 @@
 [
   {
     "ContainingType": "API.Controllers.EmployeeController",
-    "Method": "GetAllAsync",
-    "RelativePath": "api/Employee",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "API.Controllers.EmployeeController",
     "Method": "Insert",
     "RelativePath": "api/Employee",
     "HttpMethod": "POST",
@@ -124,6 +114,22 @@
       {
         "Name": "pgSize",
         "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.EmployeeController",
+    "Method": "FilterEmployee",
+    "RelativePath": "api/Employee/FilterEmployee/{searchText}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "searchText",
+        "Type": "System.String",
         "IsRequired": true
       }
     ],

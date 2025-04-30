@@ -3,6 +3,7 @@ import { environment } from '../environment/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Employee } from '../models/employee';
+import { observableToBeFn } from 'rxjs/internal/testing/TestScheduler';
 
 @Injectable({
   providedIn: 'root'
@@ -10,9 +11,6 @@ import { Employee } from '../models/employee';
 export class EmployeeService {
   apiUrl:string = environment.apiUrl;
   constructor(private httpClient:HttpClient) { }
-  GetEmployeeAsync():Observable<Employee[]>{
-    return this.httpClient.get<Employee[]>(`${this.apiUrl}/Employee`);
-  }
   GetEmployeeById(id:number):Observable<Employee>{
     return this.httpClient.get<Employee>(`${this.apiUrl}/Employee/${id}`);
   }
@@ -21,6 +19,9 @@ export class EmployeeService {
   }
   GetAllWithPagination(pgNumber:number,pgSize:number):Observable<Employee[]>{
     return this.httpClient.get<Employee[]>(`${this.apiUrl}/Employee/${pgNumber}/${pgSize}`)
+  }
+  FilterEmployee(searchText:string):Observable<Employee[]>{
+    return this.httpClient.get<Employee[]>(`${this.apiUrl}/Employee/FilterEmployee/${searchText}`);;
   }
   InsertEmployee(employeeForm:FormData):Observable<any>{
     return this.httpClient.post(`${this.apiUrl}/Employee`,employeeForm)
