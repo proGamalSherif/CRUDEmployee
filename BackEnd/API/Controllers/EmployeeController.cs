@@ -33,7 +33,7 @@ namespace API.Controllers
             return Ok(employee);
         }
         [HttpPost]
-        public async Task<ActionResult> Insert(ModifyEmployeeDTO employeeModel)
+        public async Task<ActionResult> Insert([FromForm] ModifyEmployeeDTO employeeModel)
         {
             if(!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -43,7 +43,7 @@ namespace API.Controllers
             return Ok();
         }
         [HttpPut("{id}")]
-        public async Task <ActionResult> Update(int id,ModifyEmployeeDTO employeeModel)
+        public async Task <ActionResult> Update(int id, [FromForm] ModifyEmployeeDTO employeeModel)
         {
             if(id <= 0)
                 return BadRequest(ModelState);

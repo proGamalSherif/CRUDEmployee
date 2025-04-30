@@ -25,7 +25,7 @@ export class EmployeeDetailsComponent implements OnInit {
     private fb: FormBuilder,
     private routes: ActivatedRoute,
     private alertServ: AlertService,
-    private employeeServ:EmployeeService
+    private employeeServ: EmployeeService
   ) {
     this.routes.paramMap.subscribe((id) => {
       this.EmployeeId = Number(id.get('id'));
@@ -46,19 +46,55 @@ export class EmployeeDetailsComponent implements OnInit {
     });
     if (this.EmployeeId > 0) {
       this.employeeServ.GetEmployeeById(this.EmployeeId).subscribe({
-        next:(res)=>{
+        next: (res) => {
           this.EmployeeForm.patchValue({
-            firstName:[res.firstName],
-            lastName:[res.lastName],
-            emailAddress:[res.emailAddress],
-            position:[res.position]
-          })
+            firstName: [res.firstName],
+            lastName: [res.lastName],
+            emailAddress: [res.emailAddress],
+            position: [res.position],
+          });
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
+    }
+    this.alertServ.close();
+  }
+  OnSubmit() {
+    this.alertServ.showLoading();
+    const formData = new FormData();
+    formData.append('firstName', this.EmployeeForm.get('firstName')?.value);
+    formData.append('lastName', this.EmployeeForm.get('lastName')?.value);
+    formData.append(
+      'emailAddress',
+      this.EmployeeForm.get('emailAddress')?.value
+    );
+    formData.append('position', this.EmployeeForm.get('position')?.value);
+    if (this.EmployeeId > 0) {
+      // Update
+      this.employeeServ.UpdateEmployee(this.EmployeeId, formData).subscribe({
+        next: () => {
+          this.alertServ.close();
+          this.alertServ.success('Employee Updated Success');
         },
         error:(err)=>{
-          console.log(err);
+          this.alertServ.close();
+          this.alertServ.error(err.error.message);
+        }
+      });
+    } else {
+      // Insert
+      this.employeeServ.InsertEmployee(formData).subscribe({
+        next:()=>{
+          this.alertServ.close();
+          this.alertServ.success('Employee Insert Success');
+        },
+        error:(err)=>{
+          this.alertServ.close();
+          this.alertServ.error(err);
         }
       })
     }
-    this.alertServ.close();
   }
 }
