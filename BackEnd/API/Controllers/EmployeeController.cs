@@ -20,6 +20,12 @@ namespace API.Controllers
             var employees = await employeeService.GetAllEmployeesAsync();
             return Ok(employees);
         }
+        [HttpGet("{pgNumber}/{pgSize}")]
+        public async Task<ActionResult> GetAllAsyncWithPagination(int pgNumber,int pgSize)
+        {
+            var employees = await employeeService.GetAllEmployeesAsyncWithPagination(pgNumber,pgSize);
+            return Ok(employees);
+        }
         [HttpGet("{id}")]
         public async Task<ActionResult> GetByIdAsync(int id)
         {

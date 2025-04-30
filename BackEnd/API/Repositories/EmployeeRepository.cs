@@ -48,5 +48,13 @@ namespace API.Repositories
                 await db.SaveChangesAsync();
             }
         }
+
+        public async Task<IEnumerable<Employee>> GetAllAsyncWithPagination(int pgNumber, int pgSize)
+        {
+            return await db.Employees
+                .Skip((pgNumber - 1) * pgSize)
+                .Take(pgSize)
+                .ToListAsync();
+        }
     }
 }
