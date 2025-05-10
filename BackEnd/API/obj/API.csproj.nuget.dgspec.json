@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Gamal\\Desktop\\CRUDEmployee\\BackEnd\\API\\API.csproj": {}
+    "D:\\Programming Sections\\Full Stack\\CRUDEmployee\\BackEnd\\API\\API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Gamal\\Desktop\\CRUDEmployee\\BackEnd\\API\\API.csproj": {
+    "D:\\Programming Sections\\Full Stack\\CRUDEmployee\\BackEnd\\API\\API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Gamal\\Desktop\\CRUDEmployee\\BackEnd\\API\\API.csproj",
+        "projectUniqueName": "D:\\Programming Sections\\Full Stack\\CRUDEmployee\\BackEnd\\API\\API.csproj",
         "projectName": "API",
-        "projectPath": "C:\\Users\\Gamal\\Desktop\\CRUDEmployee\\BackEnd\\API\\API.csproj",
-        "packagesPath": "C:\\Users\\Gamal\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Gamal\\Desktop\\CRUDEmployee\\BackEnd\\API\\obj\\",
+        "projectPath": "D:\\Programming Sections\\Full Stack\\CRUDEmployee\\BackEnd\\API\\API.csproj",
+        "packagesPath": "C:\\Users\\devga\\.nuget\\packages\\",
+        "outputPath": "D:\\Programming Sections\\Full Stack\\CRUDEmployee\\BackEnd\\API\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Gamal\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\devga\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,7 +26,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {

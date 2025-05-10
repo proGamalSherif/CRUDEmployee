@@ -1,3 +1,3 @@
 export const environment = {
-    apiUrl: 'http://gcrudemployee.runasp.net/api'
+  apiUrl: 'https://onlineapi.runasp.net/api',
 };
