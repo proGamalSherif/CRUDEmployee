@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 import Swal from 'sweetalert2';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AlertService {
-  constructor() { }
+  constructor() {}
   success(message: string, title: string = 'Success'): Promise<void> {
     return Swal.fire({
       icon: 'success',
       title,
       text: message,
       confirmButtonColor: '#198754',
-      timer: 1000,
+      timer: 2500,
     }).then(() => {
       return;
     });
@@ -22,7 +22,7 @@ export class AlertService {
       title,
       text: message,
       confirmButtonColor: '#dc3545',
-      timer: 1000,
+      timer: 2500,
     });
   }
   confirm(message: string, title: string = 'Are you sure?') {
