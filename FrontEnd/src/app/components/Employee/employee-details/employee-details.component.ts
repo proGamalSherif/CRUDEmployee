@@ -98,7 +98,7 @@ export class EmployeeDetailsComponent implements OnInit {
             firstName: res.firstName,
             lastName: res.lastName,
             emailAddress: res.emailAddress,
-            position: res.position
+            position: res.position,
           });
           this.alertServ.close();
         },
@@ -131,7 +131,7 @@ export class EmployeeDetailsComponent implements OnInit {
           },
           error: (err) => {
             this.alertServ.close();
-            this.alertServ.error(err.message);
+            this.alertServ.error(err.error.message);
           },
         });
       } else {
@@ -144,7 +144,7 @@ export class EmployeeDetailsComponent implements OnInit {
           },
           error: (err) => {
             this.alertServ.close();
-            this.alertServ.error(err.message);
+            this.alertServ.error(err.error.message);
           },
         });
       }

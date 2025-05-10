@@ -1,4 +1,5 @@
-﻿using API.DTO;
+﻿using API.APIResponse;
+using API.DTO;
 using API.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -45,8 +46,15 @@ namespace API.Controllers
                 return BadRequest(ModelState);
             if(employeeModel == null)
                 return BadRequest(ModelState);
-            await employeeService.AddEmployeeAsync(employeeModel);
-            return Ok();
+            APIResponse.APIResponse result = await employeeService.AddEmployeeAsync(employeeModel);
+            if (result.IsSuccess)
+            {
+                return Ok(new { Message = result.SuccessMessage });
+            }
+            else
+            {
+                return BadRequest(new { Message = result.ErrorMessage });
+            }
         }
         [HttpPut("{id}")]
         public async Task <ActionResult> Update(int id, [FromForm] ModifyEmployeeDTO employeeModel)
@@ -57,8 +65,15 @@ namespace API.Controllers
                 return BadRequest(ModelState);
             if (employeeModel == null)
                 return BadRequest(ModelState);
-            await employeeService.UpdateEmployeeAsync(id, employeeModel);
-            return Ok();
+            APIResponse.APIResponse result = await employeeService.UpdateEmployeeAsync(id,employeeModel);
+            if (result.IsSuccess)
+            {
+                return Ok(new { Message = result.SuccessMessage });
+            }
+            else
+            {
+                return BadRequest(new { Message = result.ErrorMessage });
+            }
         }
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)

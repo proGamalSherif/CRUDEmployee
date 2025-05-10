@@ -11,5 +11,6 @@ namespace API.Interfaces
         Task AddAsync(Employee employee);
         Task Update(int id, Employee employee);
         Task Delete(int id);
+        Task<bool> IsEmailTaken(int id,string email);
     }
 }

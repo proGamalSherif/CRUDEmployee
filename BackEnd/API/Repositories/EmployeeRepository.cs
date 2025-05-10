@@ -75,5 +75,10 @@ namespace API.Repositories
                 return await db.Employees.ToListAsync();
             }
         }
+        public async Task<bool> IsEmailTaken(int id, string email)
+        {
+            return await db.Employees
+                .AnyAsync(e => e.EmailAddress.ToLower() == email.ToLower() && e.EmployeeId != id);
+        }
     }
 }

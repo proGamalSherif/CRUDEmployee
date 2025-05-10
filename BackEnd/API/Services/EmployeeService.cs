@@ -1,7 +1,6 @@
 ﻿using API.DTO;
 using API.Interfaces;
 using API.Models;
-using API.Repositories;
 using AutoMapper;
 
 namespace API.Services
@@ -31,19 +30,25 @@ namespace API.Services
             var mappedEmployee=mapper.Map<ReadEmploeeDTO>(employee);    
             return mappedEmployee;
         }
-        public async Task AddEmployeeAsync(ModifyEmployeeDTO employee)
+        public async Task<APIResponse.APIResponse> AddEmployeeAsync(ModifyEmployeeDTO employee)
         {
+            bool canSave = await unitOfWork.EmployeeRepository.IsEmailTaken(0,employee.EmailAddress);
+            if (canSave) return APIResponse.APIResponse.Fail("Email Address is Assigned To Another Employee");
             var mappedEmployee = mapper.Map<Employee>(employee);
             await unitOfWork.EmployeeRepository.AddAsync(mappedEmployee);
+            return APIResponse.APIResponse.Success("Employee Created Successfull");
         }
-        public async Task UpdateEmployeeAsync(int id, ModifyEmployeeDTO employee)
+        public async Task<APIResponse.APIResponse> UpdateEmployeeAsync(int id, ModifyEmployeeDTO employee)
         {
+            bool canSave = await unitOfWork.EmployeeRepository.IsEmailTaken(id, employee.EmailAddress);
+            if (canSave) return APIResponse.APIResponse.Fail("Email Address is Assigned To Another Employee");
             var mappedEmployee = mapper.Map<Employee>(employee);
             await unitOfWork.EmployeeRepository.Update(id, mappedEmployee);
+            return APIResponse.APIResponse.Success("Employee Updated Successfull");
         }
         public async Task DeleteEmployeeAsync(int id)
         {
-           await unitOfWork.EmployeeRepository.Delete(id);
+            await unitOfWork.EmployeeRepository.Delete(id);
         }
         public async Task<IEnumerable<ReadEmploeeDTO>> FilterSearch(string searchText)
         {
